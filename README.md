@@ -9,6 +9,13 @@ An AI-powered chat agent designed to help beginners and non-coders find and cont
 *   **🧠 Conversational Memory:** The agent remembers the context of your conversation, allowing for natural, multi-turn follow-up questions.
 *   **🎨 Polished UI:** A clean, modern, and responsive chat interface for a great user experience.
 
+<img width="3146" height="4145" alt="screencapture-localhost-8000-2025-11-02-18_52_38" src="https://github.com/user-attachments/assets/2b2666b6-5f70-4e3f-9da6-8983fc911882" />
+<img width="2106" height="2215" alt="screencapture-localhost-8000-2025-11-02-17_38_12" src="https://github.com/user-attachments/assets/4255f099-4edc-4fdc-8437-7af59ef83c31" />
+<img width="2106" height="3552" alt="screencapture-localhost-8000-2025-11-02-17_37_54" src="https://github.com/user-attachments/assets/36f594ce-71ce-479b-8071-6cda4bd8c1de" />\
+
+https://github.com/user-attachments/assets/1e46b4a9-c92a-4bbb-a701-87c1f74e7a43
+
+
 ## Tech Stack
 
 *   **Backend:** Node.js with Express.js
