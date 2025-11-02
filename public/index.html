@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source Navigator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Open Source Navigator 🧭</h1>
+            <p>Your friendly guide to contributing to open source.</p>
+        </header>
+        <div class="chat-window" id="chat-window">
+            <div class="message agent-message">
+                <p>Hello! What are you interested in? Tell me about your skills (e.g., writing, design, coding) and a topic you're passionate about (e.g., climate change, mental health).</p>
+            </div>
+        </div>
+        <form class="chat-input-form" id="message-form">
+            <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" required>
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+
+        let sessionId = null;
+
+        messageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // --- CORRECTED CALLS ---
+            appendMessage(message, 'user-message');
+            messageInput.value = '';
+            messageInput.focus();
+
+            const thinkingIndicator = appendMessage('Thinking...', 'agent-message thinking-message');
+            sendButton.disabled = true;
+
+            try {
+                const response = await fetch('/invoke', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, session_id: sessionId })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                sessionId = data.session_id;
+
+                thinkingIndicator.remove();
+                appendMessage(data.response, 'agent-message');
+
+            } catch (error) {
+                thinkingIndicator.remove();
+                appendMessage('Sorry, something went wrong. Please try again.', 'agent-message error-message');
+                console.error('Error:', error);
+            } finally {
+                sendButton.disabled = false;
+            }
+        });
+
+        // --- CORRECTED FUNCTION ---
+        // This function now correctly handles multiple, space-separated class names.
+        function appendMessage(content, typeClasses) {
+            const messageElement = document.createElement('div');
+            // The 'className' property is a simple way to assign all classes at once.
+            messageElement.className = 'message ' + typeClasses;
+            
+            // Use marked to parse markdown content for agent messages
+            if (typeClasses.includes('agent-message')) {
+                messageElement.innerHTML = marked.parse(content);
+            } else {
+                const p = document.createElement('p');
+                p.textContent = content;
+                messageElement.appendChild(p);
+            }
+            
+            chatWindow.appendChild(messageElement);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to bottom
+            return messageElement;
+        }
+    </script>
+</body>
+</html>

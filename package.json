@@ -1,0 +1,22 @@
+{
+  "name": "os-navigator-js",
+  "version": "1.0.0",
+  "description": "An AI agent to help beginners contribute to open source.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.1",
+    "cheerio": "^1.1.2",
+    "dotenv": "^17.2.3",
+    "duckduckgo-search-api": "^1.0.5",
+    "express": "^5.1.0",
+    "uuid": "^13.0.0"
+  }
+}
